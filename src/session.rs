@@ -15,6 +15,8 @@ use std::{
 
 pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> {
     let lesson = lessons::get_random_lesson();
+    let lesson_chars: Vec<char> = lesson.chars().collect();
+    let lesson_len = lesson_chars.len();
     let mut input = String::new();
     let mut mistakes = 0;
     let mut started = false;
@@ -31,13 +33,13 @@ pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> 
                 .margin(1)
                 .constraints([
                     Constraint::Percentage(60),
-                    Constraint::Percentage(30),
+                    Constraint::Percentage(40),
                     Constraint::Min(1),
                 ])
                 .split(size);
 
             let mut spans = Vec::new();
-            for (i, c) in lesson.chars().enumerate() {
+            for (i, &c) in lesson_chars.iter().enumerate() {
                 let style = match i.cmp(&input_len) {
                     std::cmp::Ordering::Less => {
                         let typed_char = input_chars[i];
@@ -81,14 +83,15 @@ pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> 
 
             let input_paragraph = Paragraph::new(input.as_str())
                 .block(input_block)
+                .wrap(Wrap { trim: true })
                 .style(Style::default().fg(Color::White))
                 .scroll((input.lines().count().saturating_sub(3) as u16, 0));
 
             f.render_widget(target_paragraph, chunks[0]);
             f.render_widget(input_paragraph, chunks[1]);
 
-            if input_len < lesson.len() {
-                let current_char = lesson.chars().nth(input_len).unwrap();
+            if input_len < lesson_len {
+                let current_char = lesson_chars[input_len];
                 let indicator = Paragraph::new(format!("Próximo carácter: '{}'", current_char))
                     .style(Style::default().fg(Color::Rgb(150, 150, 255)))
                     .alignment(Alignment::Center);
@@ -105,10 +108,10 @@ pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> 
             if let Event::Key(key) = event::read()? {
                 match key.code {
                     KeyCode::Char(c) => {
-                        if input.len() < lesson.len() {
+                        if input_len < lesson_len {
                             input.push(c);
                             let pos = input.chars().count() - 1;
-                            if lesson.chars().nth(pos).unwrap() != c {
+                            if lesson_chars[pos] != c {
                                 mistakes += 1;
                             }
                         }
@@ -124,11 +127,11 @@ pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> 
             }
         }
 
-        if input.len() == lesson.len() {
+        if input_len == lesson_len {
             let duration = start_time.elapsed().as_secs_f64();
-            let wpm = (input.len() as f64 / 5.0) / (duration / 60.0);
+            let wpm = (input_len as f64 / 5.0) / (duration / 60.0);
             let stats = TypingStats {
-                total_chars: input.len(),
+                total_chars: input_len,
                 mistakes,
                 wpm,
             };
@@ -164,25 +167,33 @@ pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> 
                     .fg(Color::White)
                     .add_modifier(Modifier::BOLD);
 
-                let chars = Paragraph::new(format!("⌨️  Caracteres: {}", stats.total_chars))
-                    .style(metric_style)
-                    .alignment(Alignment::Center);
-                f.render_widget(chars, inner_chunks[0]);
+                f.render_widget(
+                    Paragraph::new(format!("⌨️  Caracteres: {}", stats.total_chars))
+                        .style(metric_style)
+                        .alignment(Alignment::Center),
+                    inner_chunks[0],
+                );
 
-                let mistakes = Paragraph::new(format!("❌  Errores: {}", stats.mistakes))
-                    .style(metric_style)
-                    .alignment(Alignment::Center);
-                f.render_widget(mistakes, inner_chunks[1]);
+                f.render_widget(
+                    Paragraph::new(format!("❌  Errores: {}", stats.mistakes))
+                        .style(metric_style)
+                        .alignment(Alignment::Center),
+                    inner_chunks[1],
+                );
 
-                let accuracy = Paragraph::new(format!("🎯  Precisión: {:.2}%", stats.accuracy()))
-                    .style(metric_style)
-                    .alignment(Alignment::Center);
-                f.render_widget(accuracy, inner_chunks[2]);
+                f.render_widget(
+                    Paragraph::new(format!("🎯  Precisión: {:.2}%", stats.accuracy()))
+                        .style(metric_style)
+                        .alignment(Alignment::Center),
+                    inner_chunks[2],
+                );
 
-                let wpm = Paragraph::new(format!("🚀  Velocidad (WPM): {:.2}", stats.wpm))
-                    .style(metric_style)
-                    .alignment(Alignment::Center);
-                f.render_widget(wpm, inner_chunks[3]);
+                f.render_widget(
+                    Paragraph::new(format!("🚀  Velocidad (WPM): {:.2}", stats.wpm))
+                        .style(metric_style)
+                        .alignment(Alignment::Center),
+                    inner_chunks[3],
+                );
 
                 let footer = Paragraph::new("Presiona ESC para volver al menú")
                     .style(Style::default().fg(Color::Rgb(255, 255, 100)))
@@ -192,6 +203,7 @@ pub fn start_practice<B: Backend>(terminal: &mut Terminal<B>) -> io::Result<()> 
                             .borders(Borders::TOP)
                             .border_style(Style::default().fg(Color::Rgb(70, 70, 90))),
                     );
+
                 f.render_widget(footer, main_chunks[1]);
             })?;
 
