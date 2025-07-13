@@ -1,10 +1,19 @@
-# typist_console 🧠⌨️
+# typist_console �🧠⌨️
 
-**typist_console** es una aplicación de práctica de mecanografía para la terminal, escrita en Rust.
+**typist_console** es una aplicación de práctica de mecanografía para terminal, escrita en Rust.
 
-![Captura de typist_console](./img/screenshot.png)
-![Captura de typist_console2](./img/screenshot2.png)
-![Captura de typist_console3](./img/screenshot3.png)
-Tiene como objetivo ayudar a mejorar la velocidad y precisión al escribir...
+![menu_de_inicio](./img/screenshot.png)
+![Captura_en_uso](./img/screenshot2.png)
+![Resultado](./img/screenshot3.png)
 
-Proximamente, se agregarán la integración con IA para sugerir correcciones y mejorar la experiencia de aprendizaje.
+Nace de mi interés por mejorar mis habilidades de mecanografía. Decidí crear una herramienta que permitiera practicar de manera efectiva y divertida directamente en la terminal, donde paso la mayor parte de mi tiempo programando.
+
+Opté por Rust por su rendimiento y seguridad, características que lo convierten en un lenguaje ideal para este tipo de aplicaciones. Además, aproveché el proyecto para aprender Rust y utilizarlo en mi entorno Linux.
+
+**Objetivo principal:** Ayudar a mejorar la velocidad y precisión al escribir mediante ejercicios prácticos con retroalimentación inmediata.
+
+## Próximas características ✨
+
+- Integración con IA para sugerir correcciones
+- Personalización de ejercicios basada en el progreso
+- Generación de informes detallados de evolución
