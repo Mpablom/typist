@@ -1,19 +1,39 @@
-# typist_console �🧠⌨️
+<h1 align="center">Typist Console 🧠⌨️</h1>
 
-**typist_console** es una aplicación de práctica de mecanografía para terminal, escrita en Rust.
+<p>
+  <strong>typist_console</strong> es una aplicación de práctica de mecanografía para terminal, escrita en Rust.
+</p>
 
-![menu_de_inicio](./img/screenshot.png)
-![Captura_en_uso](./img/screenshot2.png)
-![Resultado](./img/screenshot3.png)
+<div>
+  <span> Menú de inicio </span>
+  <img src="./img/screenshot.png" alt="Menú de inicio">
+  <span> Sesión de práctica </span>
+  <img src="./img/screenshot2.png" alt="Sesión de práctica">
+  <span> Estadísticas de sesión </span>
+  <img src="./img/screenshot3.png" alt="Estadísticas de sesión">
+</div>
 
-Nace de mi interés por mejorar mis habilidades de mecanografía. Decidí crear una herramienta que permitiera practicar de manera efectiva y divertida directamente en la terminal, donde paso la mayor parte de mi tiempo programando.
+<p>
+Nace de mi interés por mejorar mis habilidades de mecanografía.<br>
+Decidí crear una herramienta que permitiera practicar de manera efectiva y divertida<br> 
+directamente en la terminal, donde paso la mayor parte de mi tiempo programando.
+</p>
 
-Opté por Rust por su rendimiento y seguridad, características que lo convierten en un lenguaje ideal para este tipo de aplicaciones. Además, aproveché el proyecto para aprender Rust y utilizarlo en mi entorno Linux.
+<p>
+Opté por Rust por su rendimiento y seguridad, características que<br>
+lo convierten en un lenguaje ideal para este tipo de aplicaciones.<br>
+Además, aproveché el proyecto para aprender Rust y utilizarlo en mi entorno Linux.
+</p>
 
-**Objetivo principal:** Ayudar a mejorar la velocidad y precisión al escribir mediante ejercicios prácticos con retroalimentación inmediata.
+<h2>Objetivo principal</h2>
+<p>
+Ayudar a mejorar la velocidad y precisión al escribir<br>
+mediante ejercicios prácticos con retroalimentación inmediata.
+</p>
 
-## Próximas características ✨
-
-- Integración con IA para sugerir correcciones
-- Personalización de ejercicios basada en el progreso
+<h2 align="center">Próximas características ✨</h2>
+<p>
+- Integración con IA para sugerir correcciones<br>
+- Personalización de ejercicios basada en el progreso<br>
 - Generación de informes detallados de evolución
+</p>
